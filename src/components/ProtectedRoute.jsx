@@ -11,9 +11,15 @@ function ProtectedRoute({ children, ruoloRichiesto }) {
     return <Navigate to="/login" />;
   }
 
-  // Se è richiesto un ruolo specifico, controllo che l'utente ce l'abbia
-  if (ruoloRichiesto && utente) {
-    const haIlRuolo = utente.ruoli.some((r) => r.denominazione === ruoloRichiesto);
+  // Se il token c'è ma l'utente non è ancora arrivato in Redux, aspetto
+  if (!utente) {
+    return null;
+  }
+
+  // Controllo che l'utente abbia il ruolo richiesto
+  // I ruoli arrivano come array di stringhe semplici, non di oggetti
+  if (ruoloRichiesto) {
+    const haIlRuolo = utente.ruoli.some((r) => r === ruoloRichiesto);
     if (!haIlRuolo) {
       return <Navigate to="/login" />;
     }
