@@ -5,8 +5,13 @@ import { setCredenziali, logout } from "./redux/authSlice";
 import { getMeApi } from "./api/authApi";
 import LoginPage from "./pages/LoginPage";
 import SuperAdminPage from "./pages/SuperAdminPage";
+import SezioniPage from "./pages/SezioniPage";
 import AdminPage from "./pages/AdminPage";
+import CategoriePage from "./pages/CategoriePage";
+import IngredientiPage from "./pages/IngredientiPage";
+import PiattiPage from "./pages/PiattiPage";
 import MetrePage from "./pages/MetrePage";
+import MenuPage from "./pages/MenuPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -34,6 +39,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+
+        {/* Route SUPER_ADMIN */}
         <Route
           path="/super-admin"
           element={
@@ -43,6 +50,16 @@ function App() {
           }
         />
         <Route
+          path="/super-admin/sezioni"
+          element={
+            <ProtectedRoute ruoloRichiesto="SUPER_ADMIN">
+              <SezioniPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Route ADMIN */}
+        <Route
           path="/admin"
           element={
             <ProtectedRoute ruoloRichiesto="ADMIN">
@@ -51,6 +68,32 @@ function App() {
           }
         />
         <Route
+          path="/admin/categorie"
+          element={
+            <ProtectedRoute ruoloRichiesto="ADMIN">
+              <CategoriePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/ingredienti"
+          element={
+            <ProtectedRoute ruoloRichiesto="ADMIN">
+              <IngredientiPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/piatti"
+          element={
+            <ProtectedRoute ruoloRichiesto="ADMIN">
+              <PiattiPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Route METRE */}
+        <Route
           path="/metre"
           element={
             <ProtectedRoute ruoloRichiesto="METRE">
@@ -58,6 +101,15 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/metre/menu"
+          element={
+            <ProtectedRoute ruoloRichiesto="METRE">
+              <MenuPage />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
