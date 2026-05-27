@@ -13,6 +13,8 @@ import PiattiPage from "./pages/PiattiPage";
 import MetrePage from "./pages/MetrePage";
 import MenuPage from "./pages/MenuPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import UtentiPage from "./pages/UtentiPage";
+import "./App.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,13 +41,29 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-
         {/* Route SUPER_ADMIN */}
         <Route
           path="/super-admin"
           element={
             <ProtectedRoute ruoloRichiesto="SUPER_ADMIN">
               <SuperAdminPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/super-admin/menu"
+          element={
+            <ProtectedRoute ruoloRichiesto="SUPER_ADMIN">
+              <MenuPage />
+            </ProtectedRoute>
+          }
+        />
+        import UtentiPage from "./pages/UtentiPage";
+        <Route
+          path="/super-admin/utenti"
+          element={
+            <ProtectedRoute ruoloRichiesto="SUPER_ADMIN">
+              <UtentiPage />
             </ProtectedRoute>
           }
         />
@@ -57,7 +75,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         {/* Route ADMIN */}
         <Route
           path="/admin"
@@ -91,7 +108,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         {/* Route METRE */}
         <Route
           path="/metre"
@@ -109,7 +125,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>

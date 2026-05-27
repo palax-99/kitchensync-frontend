@@ -12,15 +12,15 @@ function AdminPage() {
     <>
       <NavigationBar />
       <Container className="mt-4">
-        <h4 className="mb-4">Benvenuto, {utente?.nome}! 👋</h4>
+        <h4 className="ks-page-title mb-4">Benvenuto, {utente?.nome}! 👋</h4>
         <Row>
           <Col md={4} className="mb-3">
             <Card>
               <Card.Body>
-                <Card.Title>Categorie</Card.Title>
-                <Card.Text>Gestisci le categorie della tua sezione</Card.Text>
-                {/* Porta alla pagina di gestione categorie */}
-                <Button variant="primary" onClick={() => navigate("/admin/categorie")}>
+                <div className="ks-card-icon">🗂️</div>
+                <Card.Title className="ks-card-title">Categorie</Card.Title>
+                <Card.Text className="ks-card-text">Gestisci le categorie della tua sezione</Card.Text>
+                <Button variant="primary" className="w-100" onClick={() => navigate("/admin/categorie")}>
                   Gestisci Categorie
                 </Button>
               </Card.Body>
@@ -29,10 +29,10 @@ function AdminPage() {
           <Col md={4} className="mb-3">
             <Card>
               <Card.Body>
-                <Card.Title>Ingredienti</Card.Title>
-                <Card.Text>Gestisci gli ingredienti della tua sezione</Card.Text>
-                {/* Porta alla pagina di gestione ingredienti */}
-                <Button variant="primary" onClick={() => navigate("/admin/ingredienti")}>
+                <div className="ks-card-icon">🥬</div>
+                <Card.Title className="ks-card-title">Ingredienti</Card.Title>
+                <Card.Text className="ks-card-text">Gestisci gli ingredienti della tua sezione</Card.Text>
+                <Button variant="primary" className="w-100" onClick={() => navigate("/admin/ingredienti")}>
                   Gestisci Ingredienti
                 </Button>
               </Card.Body>
@@ -41,10 +41,10 @@ function AdminPage() {
           <Col md={4} className="mb-3">
             <Card>
               <Card.Body>
-                <Card.Title>Piatti</Card.Title>
-                <Card.Text>Gestisci i piatti della tua sezione</Card.Text>
-                {/* Porta alla pagina di gestione piatti */}
-                <Button variant="primary" onClick={() => navigate("/admin/piatti")}>
+                <div className="ks-card-icon">🍽️</div>
+                <Card.Title className="ks-card-title">Piatti</Card.Title>
+                <Card.Text className="ks-card-text">Gestisci i piatti della tua sezione</Card.Text>
+                <Button variant="primary" className="w-100" onClick={() => navigate("/admin/piatti")}>
                   Gestisci Piatti
                 </Button>
               </Card.Body>

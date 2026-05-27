@@ -68,3 +68,18 @@ export const scollegaIngredienteApi = (token, id, onSuccess, onError) => {
     .then(() => onSuccess())
     .catch((err) => onError(err));
 };
+
+// Carico l'immagine del piatto su Cloudinary
+export const uploadImmaginePiattoApi = (token, id, file, onSuccess, onError) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  fetch(`${BASE_URL}/piatti/${id}/immagine`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: formData,
+  })
+    .then((res) => res.json())
+    .then((data) => onSuccess(data))
+    .catch((err) => onError(err));
+};

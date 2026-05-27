@@ -12,15 +12,16 @@ function MetrePage() {
     <>
       <NavigationBar />
       <Container className="mt-4">
-        <h4 className="mb-4">Benvenuto, {utente?.nome}! 👋</h4>
+        <h4 className="ks-page-title mb-4">Benvenuto, {utente?.nome}! 👋</h4>
         <Row>
           <Col md={6} className="mb-3">
             <Card>
               <Card.Body>
-                <Card.Title>Menu</Card.Title>
-                <Card.Text>Visualizza il menu completo del ristorante</Card.Text>
+                <div className="ks-card-icon">📖</div>
+                <Card.Title className="ks-card-title">Menu</Card.Title>
+                <Card.Text className="ks-card-text">Visualizza il menu completo del ristorante</Card.Text>
                 {/* Porta alla pagina del menu vivo */}
-                <Button variant="primary" onClick={() => navigate("/metre/menu")}>
+                <Button variant="primary" className="w-100" onClick={() => navigate("/metre/menu")}>
                   Visualizza Menu
                 </Button>
               </Card.Body>
@@ -29,10 +30,11 @@ function MetrePage() {
           <Col md={6} className="mb-3">
             <Card>
               <Card.Body>
-                <Card.Title>Notifiche</Card.Title>
-                <Card.Text>Visualizza le notifiche dai reparti</Card.Text>
-                {/* Per ora disabilitato — funzione che implementerò dopo*/}
-                <Button variant="primary" disabled>
+                <div className="ks-card-icon">🔔</div>
+                <Card.Title className="ks-card-title">Notifiche</Card.Title>
+                <Card.Text className="ks-card-text">Visualizza le notifiche dai reparti</Card.Text>
+                {/* Per ora disabilitato — arriva nella Slice 4 */}
+                <Button variant="primary" className="w-100" disabled>
                   Visualizza Notifiche
                 </Button>
               </Card.Body>

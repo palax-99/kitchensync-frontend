@@ -1,8 +1,16 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Container, Table, Button, Form, Alert, Collapse, Badge } from "react-bootstrap";
+import { Container, Table, Button, Form, Alert, Badge } from "react-bootstrap";
 import NavigationBar from "../components/NavigationBar";
-import { getPiattiApi, creaPiattoApi, eliminaPiattoApi, getPiattoIngredientiApi, collegaIngredienteApi, scollegaIngredienteApi } from "../api/piattiApi";
+import {
+  getPiattiApi,
+  creaPiattoApi,
+  eliminaPiattoApi,
+  getPiattoIngredientiApi,
+  collegaIngredienteApi,
+  scollegaIngredienteApi,
+  uploadImmaginePiattoApi,
+} from "../api/piattiApi";
 import { getCategorieApi } from "../api/categorieApi";
 import { getIngredientiApi } from "../api/ingredientiApi";
 
@@ -19,6 +27,9 @@ function PiattiPage() {
   const [piattoAperto, setPiattoAperto] = useState(null);
   const [ingredientiPiatto, setIngredientiPiatto] = useState([]);
   const [ingredienteSelezionato, setIngredienteSelezionato] = useState("");
+
+  // File immagine selezionato per l'upload
+  const [fileImmagine, setFileImmagine] = useState(null);
 
   const [form, setForm] = useState({
     nome: "",
@@ -110,11 +121,11 @@ function PiattiPage() {
     );
   };
 
-  // Apro o chiudo il pannello ingredienti di un piatto
   const handleToggleIngredienti = (piattoId) => {
     if (piattoAperto === piattoId) {
       setPiattoAperto(null);
       setIngredientiPiatto([]);
+      setFileImmagine(null);
     } else {
       setPiattoAperto(piattoId);
       caricaIngredientiPiatto(piattoId);
@@ -141,11 +152,26 @@ function PiattiPage() {
     );
   };
 
+  const handleUploadImmagine = (piattoId) => {
+    if (!fileImmagine) return;
+    uploadImmaginePiattoApi(
+      token,
+      piattoId,
+      fileImmagine,
+      () => {
+        setSuccesso("Immagine caricata con successo");
+        setFileImmagine(null);
+        caricaPiatti(form.categoriaId);
+      },
+      () => setErrore("Errore nel caricamento dell'immagine"),
+    );
+  };
+
   return (
     <>
       <NavigationBar />
-      <Container className="mt-4">
-        <h2>Gestione Piatti</h2>
+      <Container className="mt-4 mb-5">
+        <h2 className="ks-page-title mb-4">Gestione Piatti</h2>
 
         {errore && <Alert variant="danger">{errore}</Alert>}
         {successo && <Alert variant="success">{successo}</Alert>}
@@ -160,35 +186,54 @@ function PiattiPage() {
         </Form.Select>
 
         {/* Form per creare un nuovo piatto */}
-        <div className="d-flex gap-2 mb-4">
-          <Form.Control type="text" placeholder="Nome piatto" value={form.nome} onChange={(e) => setForm({ ...form, nome: e.target.value })} />
-          <Form.Control type="text" placeholder="Descrizione" value={form.descrizione} onChange={(e) => setForm({ ...form, descrizione: e.target.value })} />
-          <Form.Control type="number" placeholder="Prezzo" value={form.prezzo} onChange={(e) => setForm({ ...form, prezzo: e.target.value })} />
+        <div className="d-flex gap-2 mb-4 flex-wrap">
+          <Form.Control
+            type="text"
+            placeholder="Nome piatto"
+            value={form.nome}
+            onChange={(e) => setForm({ ...form, nome: e.target.value })}
+            className="ks-form-control"
+          />
+          <Form.Control
+            type="text"
+            placeholder="Descrizione"
+            value={form.descrizione}
+            onChange={(e) => setForm({ ...form, descrizione: e.target.value })}
+            className="ks-form-control d-none d-md-block"
+          />
+          <Form.Control
+            type="number"
+            placeholder="Prezzo"
+            value={form.prezzo}
+            onChange={(e) => setForm({ ...form, prezzo: e.target.value })}
+            className="ks-form-control"
+            style={{ maxWidth: "120px" }}
+          />
           <Button variant="primary" onClick={handleCrea}>
             Crea
           </Button>
         </div>
 
-        {/* Tabella piatti */}
-        <Table striped bordered hover>
+        {/* Tabella piatti — senza colonna immagine, si gestisce dal pannello */}
+        <Table striped hover>
           <thead>
             <tr>
               <th>Nome</th>
-              <th>Descrizione</th>
+              <th className="d-none d-md-table-cell">Descrizione</th>
               <th>Prezzo</th>
               <th>Azioni</th>
             </tr>
           </thead>
           <tbody>
             {piatti.map((p) => (
-              <>
-                <tr key={p.id}>
+              <React.Fragment key={p.id}>
+                <tr>
                   <td>{p.nome}</td>
-                  <td>{p.descrizione}</td>
+                  <td className="d-none d-md-table-cell">{p.descrizione}</td>
                   <td>€ {p.prezzo.toFixed(2)}</td>
                   <td className="d-flex gap-2">
                     <Button variant="outline-primary" size="sm" onClick={() => handleToggleIngredienti(p.id)}>
-                      {piattoAperto === p.id ? "Chiudi" : "Ingredienti"}
+                      {piattoAperto === p.id ? "Chiudi" : "Gestisci"}
                     </Button>
                     <Button variant="danger" size="sm" onClick={() => handleElimina(p.id)}>
                       Elimina
@@ -196,14 +241,13 @@ function PiattiPage() {
                   </td>
                 </tr>
 
-                {/* Pannello ingredienti espandibile */}
+                {/* Pannello espandibile — ingredienti e upload immagine */}
                 {piattoAperto === p.id && (
-                  <tr key={`${p.id}-ingredienti`}>
+                  <tr>
                     <td colSpan={4} className="bg-light">
                       <div className="p-2">
-                        <strong>Ingredienti di {p.nome}</strong>
-
-                        {/* Lista ingredienti collegati */}
+                        {/* Ingredienti */}
+                        <strong>Ingredienti</strong>
                         <div className="d-flex flex-wrap gap-2 my-2">
                           {ingredientiPiatto.length === 0 && <span className="text-muted">Nessun ingrediente collegato</span>}
                           {ingredientiPiatto.map((pi) => (
@@ -218,9 +262,7 @@ function PiattiPage() {
                             </Badge>
                           ))}
                         </div>
-
-                        {/* Select per aggiungere un ingrediente */}
-                        <div className="d-flex gap-2">
+                        <div className="d-flex gap-2 mb-3">
                           <Form.Select size="sm" value={ingredienteSelezionato} onChange={(e) => setIngredienteSelezionato(e.target.value)}>
                             {ingredienti.map((i) => (
                               <option key={i.id} value={i.id}>
@@ -232,11 +274,20 @@ function PiattiPage() {
                             Aggiungi
                           </Button>
                         </div>
+
+                        {/* Upload immagine — si vede nel menu del METRE */}
+                        <strong>Immagine</strong>
+                        <div className="d-flex gap-2 mt-2">
+                          <Form.Control type="file" size="sm" accept="image/*" onChange={(e) => setFileImmagine(e.target.files[0])} />
+                          <Button variant="outline-primary" size="sm" onClick={() => handleUploadImmagine(p.id)}>
+                            Carica
+                          </Button>
+                        </div>
                       </div>
                     </td>
                   </tr>
                 )}
-              </>
+              </React.Fragment>
             ))}
           </tbody>
         </Table>

@@ -1,0 +1,313 @@
+:root {
+  --ks-primary: #1a2332;
+  --ks-primary-light: #2a3548;
+  --ks-accent: #f39024;
+  --ks-accent-hover: #d97a16;
+  --ks-bg: #f8f9fa;
+  --ks-text: #1a2332;
+  --ks-text-muted: #6c757d;
+  --ks-border: #e9ecef;
+  --ks-success: #28a745;
+  --ks-danger: #dc3545;
+  --ks-warning: #ffc107;
+  --ks-shadow: 0 2px 8px rgba(26, 35, 50, 0.08);
+  --ks-shadow-hover: 0 4px 16px rgba(26, 35, 50, 0.12);
+}
+
+/* Font globale */
+* {
+  font-family:
+    "Poppins",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+body {
+  background-color: var(--ks-bg);
+  color: var(--ks-text);
+}
+
+/* Bottone primario */
+.btn-primary {
+  background-color: var(--ks-primary) !important;
+  border-color: var(--ks-primary) !important;
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  background-color: var(--ks-primary-light) !important;
+  border-color: var(--ks-primary-light) !important;
+}
+
+/* Bottone accent arancione */
+.btn-accent {
+  background-color: var(--ks-accent);
+  border-color: var(--ks-accent);
+  color: white;
+  font-weight: 500;
+}
+
+.btn-accent:hover {
+  background-color: var(--ks-accent-hover);
+  border-color: var(--ks-accent-hover);
+  color: white;
+}
+
+/* Card moderne */
+.card {
+  border: none !important;
+  box-shadow: var(--ks-shadow);
+  transition: all 0.2s ease;
+  border-radius: 12px !important;
+}
+
+.card:hover {
+  box-shadow: var(--ks-shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* Tabelle */
+.table {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--ks-shadow);
+}
+
+.table thead {
+  background-color: var(--ks-primary);
+  color: white;
+}
+
+.table thead th {
+  border: none !important;
+  padding: 14px !important;
+  font-weight: 500;
+}
+
+.table tbody td {
+  vertical-align: middle;
+}
+
+/* ========================
+   NAVBAR
+======================== */
+.ks-navbar {
+  background-color: var(--ks-primary) !important;
+  box-shadow: var(--ks-shadow);
+  padding: 0.8rem 0;
+}
+
+.ks-navbar-logo {
+  height: 40px;
+  width: auto;
+}
+
+.ks-navbar-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.5px;
+}
+
+.ks-accent-text {
+  color: var(--ks-accent);
+}
+
+.ks-user-name {
+  color: white;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.ks-logout-btn {
+  background-color: transparent !important;
+  border: 1.5px solid var(--ks-accent) !important;
+  color: var(--ks-accent) !important;
+  font-weight: 500;
+  padding: 0.35rem 1.2rem !important;
+  transition: all 0.2s ease;
+}
+
+.ks-logout-btn:hover {
+  background-color: var(--ks-accent) !important;
+  color: white !important;
+}
+
+@media (max-width: 768px) {
+  .ks-navbar-title {
+    font-size: 1.2rem;
+  }
+  .ks-navbar-logo {
+    height: 32px;
+  }
+}
+
+/* ========================
+   LOGIN PAGE
+======================== */
+.ks-login-wrapper {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.ks-login-left {
+  background-color: var(--ks-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.ks-login-brand {
+  text-align: center;
+  padding: 2rem;
+}
+
+.ks-login-logo {
+  width: 280px;
+  height: auto;
+  margin-bottom: 1.5rem;
+  background-color: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+}
+
+.ks-login-claim {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.ks-login-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.ks-login-form-wrapper {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+}
+
+.ks-login-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--ks-primary);
+  margin-bottom: 0.5rem;
+}
+
+.ks-login-subtitle {
+  color: var(--ks-text-muted);
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.ks-form-label {
+  font-weight: 500;
+  color: var(--ks-text);
+  font-size: 0.9rem;
+}
+
+.ks-form-control {
+  border: 1.5px solid var(--ks-border) !important;
+  border-radius: 8px !important;
+  padding: 0.75rem 1rem !important;
+  font-size: 0.95rem !important;
+  transition: border-color 0.2s ease !important;
+}
+
+.ks-form-control:focus {
+  border-color: var(--ks-accent) !important;
+  box-shadow: 0 0 0 3px rgba(243, 144, 36, 0.15) !important;
+}
+
+.ks-login-btn {
+  background-color: var(--ks-primary) !important;
+  border-color: var(--ks-primary) !important;
+  padding: 0.75rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.ks-login-btn:hover {
+  background-color: var(--ks-accent) !important;
+  border-color: var(--ks-accent) !important;
+}
+
+@media (max-width: 768px) {
+  .ks-login-right {
+    padding: 2rem 1rem;
+  }
+}
+/* Menu Page */
+.ks-page-title {
+  font-weight: 700;
+  color: var(--ks-primary);
+}
+
+.ks-sezione-header {
+  background-color: var(--ks-primary);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.ks-categoria-title {
+  color: var(--ks-text-muted);
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+}
+
+.ks-piatto-img {
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.ks-piatto-nome {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ks-primary);
+}
+
+.ks-piatto-prezzo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ks-accent);
+  margin-top: 0.5rem;
+}
+
+/* Dashboard card */
+.ks-card-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.ks-card-title {
+  font-weight: 600;
+  color: var(--ks-primary);
+  font-size: 1.1rem;
+}
+
+.ks-card-text {
+  color: var(--ks-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.2rem;
+}

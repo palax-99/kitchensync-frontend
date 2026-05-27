@@ -20,9 +20,9 @@ function SezioniPage() {
     );
   };
 
-  // Carico le sezioni all'avvio — dopo aver dichiarato caricaSezioni
   useEffect(() => {
     caricaSezioni();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCrea = () => {
@@ -62,22 +62,28 @@ function SezioniPage() {
   return (
     <>
       <NavigationBar />
-      <Container className="mt-4">
-        <h2>Gestione Sezioni</h2>
+      <Container className="mt-4 mb-5">
+        <h2 className="ks-page-title mb-4">Gestione Sezioni</h2>
 
         {errore && <Alert variant="danger">{errore}</Alert>}
         {successo && <Alert variant="success">{successo}</Alert>}
 
         {/* Form per creare una nuova sezione */}
         <div className="d-flex gap-2 mb-4">
-          <Form.Control type="text" placeholder="Nome nuova sezione" value={nuovoNome} onChange={(e) => setNuovoNome(e.target.value)} />
+          <Form.Control
+            type="text"
+            placeholder="Nome nuova sezione"
+            value={nuovoNome}
+            onChange={(e) => setNuovoNome(e.target.value)}
+            className="ks-form-control"
+          />
           <Button variant="primary" onClick={handleCrea}>
             Crea
           </Button>
         </div>
 
         {/* Tabella sezioni */}
-        <Table striped bordered hover>
+        <Table striped hover>
           <thead>
             <tr>
               <th>Nome</th>
